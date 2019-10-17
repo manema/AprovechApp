@@ -6,14 +6,26 @@
  * @flow
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
+import { sessionService } from 'redux-react-native-session';
+import api from 'api';
+import applyDefaultInterceptors from 'api/utils/applyDefaultInterceptors';
 import HomePage from './src/containers/homepage/index';
 
 import configureStore from './src/store/configureStore';
 const store = configureStore({});
+applyDefaultInterceptors(api);
 
 const App = () => {
+
+  useEffect(() => {
+    const initSession = async () => {
+      await sessionService.initSessionService(store);
+    };
+    initSession();
+  }, []);
+
   return (
     <Provider store={store}>
       <HomePage />
