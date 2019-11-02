@@ -9,13 +9,13 @@ const Input = ({
   label,
   meta: { touched, error },
 }) => (
-  <View>
-    {label && <Text>{label}</Text>}
+  <View style={styles.container}>
     <View>
       <TextInput
         style={styles.input}
         onChangeText={onChange}
         secureTextEntry={password}
+        placeholder={label}
         {...restInput}
       />
       {touched && error && <Text>{error}</Text>}

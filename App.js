@@ -13,7 +13,9 @@ import api from 'api';
 import applyDefaultInterceptors from 'api/utils/applyDefaultInterceptors';
 import HomePage from './src/containers/homepage/index';
 
+import AppContainer from 'navigators';
 import configureStore from './src/store/configureStore';
+
 const store = configureStore({});
 applyDefaultInterceptors(api);
 
@@ -28,7 +30,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <HomePage />
+      <AppContainer />
     </Provider>
   );
 };

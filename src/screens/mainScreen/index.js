@@ -15,10 +15,9 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux'
 import { getDataActions } from 'actions/getDataActions';
-
 import LoginForm from 'components/forms/loginForm';
 
-const HomePage = ({ data, getDataActions, navigation }) => {
+const MainScreen = ({ data, getDataActions }) => {
 
   useEffect(() => {
     const initSession = async () => {
@@ -43,7 +42,7 @@ const HomePage = ({ data, getDataActions, navigation }) => {
   return (
     <View>
       <Text>AprovechApp</Text>
-      <LoginForm onSubmit={values => { console.log(values)}}/>
+      {/* <LoginForm onSubmit={values => { console.log(values)}}/> */}
       <Button
           title="Press me"
           color="#f194ff"
@@ -62,4 +61,4 @@ const mapDispatch = { getDataActions };
 export default connect(
   mapState,
   mapDispatch
-)(HomePage);
+)(MainScreen);

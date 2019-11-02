@@ -2,12 +2,13 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   btnContainer: {
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginTop: 30
   },
   btnForget: {
 
   },
-  btnLogin: {
+  btnSignUp: {
     marginTop: 'auto',
     alignSelf: 'flex-end'
   },
