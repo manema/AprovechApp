@@ -29,7 +29,6 @@ const LoginScreen = memo(({ navigation }) => {
       <View style={styles.loginContainer}>
         <LoginForm onSubmit={loginRequest} />
       </View>
-      {/* <Button title="Crear cuenta" onPress={handleLogin} /> */}
       <View style={styles.btnContainer}>
         <Button
           text={LOGIN.createAccount}
@@ -37,12 +36,6 @@ const LoginScreen = memo(({ navigation }) => {
           secondary
         />
       </View>
-      {/* <Button
-          title="Go login"
-          color="#f194ff"
-          onPress={() => navigation.navigate("MainScreen")}
-        /> */}
-      {/* {strings.SIGN_UP.title} */}
     </KeyboardAvoidingView>
   );
 });
@@ -56,7 +49,6 @@ LoginScreen.options = {
     title: {
       text: "Iniciar sesión",
     },
-    // strings.SIGN_IN.title,
   },
 };
 

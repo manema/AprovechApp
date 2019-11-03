@@ -13,6 +13,7 @@ module.exports = {
           services: './src/services',
           components: './src/components',
           constants: './src/constants',
+          constraints: './src/constraints',
           screens: './src/screens',
           hooks: './src/hooks',
           locale: './src/locale',

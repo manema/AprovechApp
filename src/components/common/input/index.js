@@ -18,7 +18,7 @@ const Input = ({
         placeholder={label}
         {...restInput}
       />
-      {touched && error && <Text>{error}</Text>}
+      {touched && error && <Text style={styles.error}>{error}</Text>}
     </View>
   </View>
 );

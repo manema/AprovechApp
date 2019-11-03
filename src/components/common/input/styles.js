@@ -1,6 +1,6 @@
   
 import { StyleSheet } from 'react-native';
-import { BLACK, GREY } from 'constants/style';
+import { BLACK, GREY, RED } from 'constants/style';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 2,
   },
+  error: {
+    color: RED
+  }
 });
 
 export default styles;

@@ -21,15 +21,9 @@ const SignUpScreen = memo(({ navigation }) => {
   return (
     <KeyboardAvoidingView style={styles.container} enabled={false} behavior="height">
       <Text style={styles.welcomeMessage}>{SIGN_UP.signUpTitle}</Text>
-      {/* <View style={styles.welcomeMessageContainer}>
-        {/* <TouchableOpacity style={styles.btnBack}>
-          <Text text="<-" />
-        </TouchableOpacity> */}
-      {/* </View> */}
       <View style={styles.signUpContainer}>
         <SignUpForm onSubmit={signUpRequest} />
       </View>
-      {/* <Button title="Crear cuenta" onPress={handleLogin} /> */}
       <View style={styles.btnContainer}>
         <Button
           text={SIGN_UP.login}
