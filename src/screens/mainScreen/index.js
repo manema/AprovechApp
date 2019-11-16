@@ -11,11 +11,27 @@ import api from 'api';
 import {
   View,
   Text,
-  Button
+  Button,
+  StyleSheet
 } from 'react-native';
 import { connect } from 'react-redux'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+
 import { getDataActions } from 'actions/getDataActions';
 import LoginForm from 'components/forms/loginForm';
+
+const styles = StyleSheet.create({
+  container: {
+    ...StyleSheet.absoluteFillObject,
+    height: 400,
+    width: 400,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
+ });
 
 const MainScreen = ({ data, getDataActions }) => {
 
@@ -30,24 +46,22 @@ const MainScreen = ({ data, getDataActions }) => {
       console.log(myresponse);
     });
     console.log(e);
-    // console.log(response);
-    // try {
-    //   const response = await api.get("Usuarios?id=1");
-    //   console.log(response);
-    // } catch(err) {
-    //   throw error;
-    // }
   }, []);
 
+
   return (
-    <View>
-      <Text>AprovechApp</Text>
-      {/* <LoginForm onSubmit={values => { console.log(values)}}/> */}
-      <Button
-          title="Press me"
-          color="#f194ff"
-          onPress={() => getDataActions()}
-        />
+    <View style={styles.container}>
+      {/* <Text>AprovechApp</Text> */}
+      <MapView
+        provider={PROVIDER_GOOGLE}
+        style={styles.map}
+        initialRegion={{
+          latitude: -34.888246,
+          longitude: -56.159197,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      />
     </View>
   );
 };
