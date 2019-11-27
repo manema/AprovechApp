@@ -1,1 +1,11 @@
 export const WELCOME = 'WELCOME';
+
+// Interest actions
+export const GET_INTEREST = 'GET_INTEREST';
+export const GET_INTEREST_SUCCESS = 'GET_INTEREST_SUCCESS';
+export const GET_INTEREST_ERROR = 'GET_INTEREST_ERROR';
+
+// Commerces actions
+export const GET_COMMERCES = 'GET_COMMERCES';
+export const GET_COMMERCES_SUCCESS = 'GET_COMMERCES_SUCCESS';
+export const GET_COMMERCES_ERROR = 'GET_COMMERCES_ERROR';

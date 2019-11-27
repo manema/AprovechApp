@@ -1,7 +1,7 @@
 import { sessionService } from 'redux-react-native-session';
 import saveSessionHeaders from './saveSessionHeaders';
 
-const ACCESS_TOKEN = 'access-token';
+const ACCESS_TOKEN = 'Authorization';
 
 const UNAUTHORIZED = 401;
 
@@ -11,7 +11,7 @@ const defaultRequestInterceptors = [
       const { token, client, uid } = await sessionService.loadSession();
       request.headers = {
         ...request.headers,
-        [ACCESS_TOKEN]: token,
+        [ACCESS_TOKEN]: `Bearer ${token}`,
         client,
         uid,
       };

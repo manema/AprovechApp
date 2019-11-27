@@ -12,12 +12,14 @@ import { sessionService } from 'redux-react-native-session';
 import api from 'api';
 import applyDefaultInterceptors from 'api/utils/applyDefaultInterceptors';
 import HomePage from './src/containers/homepage/index';
+import { enableAndroidAnimation } from 'utils/helpers';
 
 import AppContainer from 'navigators';
 import configureStore from './src/store/configureStore';
 
 const store = configureStore({});
 applyDefaultInterceptors(api);
+enableAndroidAnimation();
 
 const App = () => {
 

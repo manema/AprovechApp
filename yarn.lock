@@ -2722,6 +2722,10 @@ image-size@^0.6.0:
   version "0.6.3"
   resolved "https://registry.npmjs.org/image-size/-/image-size-0.6.3.tgz#e7e5c65bb534bd7cdcedd6cb5166272a85f75fb2"
 
+immer@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npmjs.org/immer/-/immer-5.0.0.tgz#07f462b7d95f7e86c214a861ecacd766d42b8c0a"
+
 immutable@3.8.1:
   version "3.8.1"
   resolved "https://registry.npmjs.org/immutable/-/immutable-3.8.1.tgz#200807f11ab0f72710ea485542de088075f68cd2"
@@ -4753,6 +4757,10 @@ react-native-screens@^2.0.0-alpha.4:
   resolved "https://registry.npmjs.org/react-native-screens/-/react-native-screens-2.0.0-alpha.8.tgz#18ac2b60216a165c6cc206266bc96efd7f6b3ea9"
   dependencies:
     debounce "^1.2.0"
+
+"react-native-swipe-gestures@git+https://github.com/devstar217/react-native-swipe-gestures.git":
+  version "1.0.2"
+  resolved "git+https://github.com/devstar217/react-native-swipe-gestures.git#b32b9fe1157ea19c326388cd4657e0e27aa41da5"
 
 react-native@0.60.5:
   version "0.60.5"
