@@ -1,23 +1,25 @@
 import React from 'react';
-import { array } from 'prop-types';
+import { array, func } from 'prop-types';
 import { ScrollView, Text } from 'react-native';
 
 import InterestCircle from 'components/interestCircle';
 import styles from './styles';
 
 const InterestBar = ({
-  interests
+  interests,
+  onChange
 }) => (
   <ScrollView horizontal style={styles.container} centerContent>
     {
       interests && interests.map(({ name, id }) => 
-      <InterestCircle name={name} id={id} key={id} /> 
+      <InterestCircle name={name} id={id} key={id} onChange={onChange} /> 
     )}
   </ScrollView>
 );
 
 InterestBar.propTypes = {
-  interests: array.isRequired
+  interests: array.isRequired,
+  onChange: func.isRequired
 };
 
 export default InterestBar;

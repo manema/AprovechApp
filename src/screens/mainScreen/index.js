@@ -19,18 +19,21 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 import { getDataActions } from 'actions/getDataActions';
 import { getInterests } from 'actions/interestActions';
-import { getCommerces } from 'actions/commercesActions';
+import { getCommerces, getCommercesByInterest } from 'actions/commercesActions';
+import { getDiscounts } from 'actions/discountActions';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import LoginForm from 'components/forms/loginForm';
 import InterestBar from 'components/interestBar';
 import Swipe from 'components/swipe';
 import styles from './styles';
 
-const MainScreen = ({ data, getDataActions, getInterests, getCommerces, interests, commerces }) => {
+const MainScreen = ({ data, getDataActions, getInterests, getCommerces, getDiscounts, getCommercesByInterest, interests, commerces }) => {
 
   useEffect(() => {
     getInterests();
     getCommerces();
-  }, [getInterests, getCommerces]);
+    getDiscounts();
+  }, [getInterests, getCommerces, getDiscounts]);
 
 
   return (
@@ -55,9 +58,8 @@ const MainScreen = ({ data, getDataActions, getInterests, getCommerces, interest
           ))}
         </MapView>
       </View>
-      <InterestBar interests={interests} />
       <Swipe style={styles.swipe}>
-        <InterestBar interests={interests} />
+        <InterestBar interests={interests} onChange={getCommercesByInterest}/>
       </ Swipe>
     </View>
   );
@@ -68,7 +70,7 @@ const mapState = ({ interest, commerce }) => ({
   commerces: commerce.commerces
 });
 
-const mapDispatch = { getDataActions, getInterests, getCommerces };
+const mapDispatch = { getDataActions, getInterests, getCommerces, getCommercesByInterest, getDiscounts };
 
 export default connect(
   mapState,
