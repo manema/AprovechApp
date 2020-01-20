@@ -6,10 +6,11 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 import LoginScreen from 'screens/loginScreen';
 import MainScreen from 'screens/mainScreen';
 import SignUpScreen from 'screens/SignUpScreen';
+import DiscountScreen from 'screens/discountScreen'
 import AppLoader from 'screens/appLoader';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const AuthStack = createStackNavigator({
+const AuthStack = createStackNavigator({ 
   LoginScreen,
   SignUpScreen,
 });
@@ -34,11 +35,16 @@ const AppStack = createDrawerNavigator(
   }
 );
 
+const MainStack = createStackNavigator({
+  DiscountScreen
+});
+
 const AppNavigator = createAnimatedSwitchNavigator(
   {
     AppLoader,
     AuthStack,
     AppStack,
+    MainStack
   },
   {
     initialRouteName: 'AuthStack',

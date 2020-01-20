@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useCallback } from 'react';
 import api from 'api';
 import {
   View,
@@ -14,26 +14,42 @@ import {
   Button,
   StyleSheet
 } from 'react-native';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { object } from 'prop-types';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 import { getDataActions } from 'actions/getDataActions';
 import { getInterests } from 'actions/interestActions';
 import { getCommerces, getCommercesByInterest } from 'actions/commercesActions';
 import { getDiscounts } from 'actions/discountActions';
+import { DISCOUNT_SCREEN } from 'constants/screens';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LoginForm from 'components/forms/loginForm';
 import InterestBar from 'components/interestBar';
+import Discount from 'components/discount';
 import Swipe from 'components/swipe';
 import styles from './styles';
 
-const MainScreen = ({ data, getDataActions, getInterests, getCommerces, getDiscounts, getCommercesByInterest, interests, commerces }) => {
-
+const MainScreen = ({ 
+  data,
+  getDataActions,
+  getInterests,
+  getCommerces,
+  getDiscounts,
+  getCommercesByInterest,
+  interests,
+  commerces,
+  discounts,
+  navigation
+}) => {
   useEffect(() => {
     getInterests();
     getCommerces();
     getDiscounts();
   }, [getInterests, getCommerces, getDiscounts]);
+  console.log(navigation);
+
+  const handlePressDiscount = useCallback(id => navigation.navigate(DISCOUNT_SCREEN, { id }), [navigation]);
 
 
   return (
@@ -59,15 +75,33 @@ const MainScreen = ({ data, getDataActions, getInterests, getCommerces, getDisco
         </MapView>
       </View>
       <Swipe style={styles.swipe}>
-        <InterestBar interests={interests} onChange={getCommercesByInterest}/>
+        {/* <SwipeChild discounts={discounts} interests={interests} onChangeBar={getCommercesByInterest} /> */}
+        <View style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
+          <InterestBar interests={interests} onChange={getCommercesByInterest}/>
+          {discounts && discounts.map(({ id, name, discountPercentage, dateStart, dateEnd, address }) =>
+            <Discount
+              key={id}
+              commerceName={name}
+              commerceAddress={address}
+              distanceToCommerce={1.2}
+              dicountType="Accesorios"
+              onChange={() => handlePressDiscount(id)}
+            />
+          )}
+        </View>
       </ Swipe>
     </View>
   );
 };
 
-const mapState = ({ interest, commerce }) => ({
+MainScreen.propTypes = {
+  navigation: object.isRequired,
+};
+
+const mapState = ({ interest, commerce, discount }) => ({
   interests: interest.interests,
-  commerces: commerce.commerces
+  commerces: commerce.commerces,
+  discounts: commerce.allDiscounts
 });
 
 const mapDispatch = { getDataActions, getInterests, getCommerces, getCommercesByInterest, getDiscounts };

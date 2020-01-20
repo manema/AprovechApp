@@ -5,19 +5,21 @@ import styles from './styles';
 
 const Button = ({
   addedStyle,
+  textAddedStyle,
   text,
   onPress,
   secondary
 }) => (
     <TouchableOpacity style={[styles.button, secondary && styles.btnSecondary, addedStyle]} onPress={onPress}>
-      {text && <Text style={[styles.text, secondary && styles.textSecondary]}>{text}</Text>}
+      {text && <Text style={[styles.text, secondary && styles.textSecondary, textAddedStyle]}>{text}</Text>}
     </ TouchableOpacity>
 );
 
 Button.propTypes = {
   text: string,
   addedStyle: object,
-  secondary: bool
+  secondary: bool,
+  textAddedStyle: string
 };
 
 Button.defaultProps = {

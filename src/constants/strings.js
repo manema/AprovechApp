@@ -10,3 +10,7 @@ export const SIGN_UP = {
   signUpTitle: "Crear Cuenta",
   login: "Ya sos usuario | Iniciar sesión"
 }
+
+export const DISCOUNT_SCREEN = {
+  btn: 'SOLICITAR DESCUENTO'
+}

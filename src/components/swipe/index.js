@@ -32,7 +32,7 @@ const Swipe = ({
       onSwipeUp={onSwipeUp}
       onSwipeDown={onSwipeDown}
       config={config}
-      style={{ backgroundColor: 'red', height: expanded ? '100%' : 120, ...style }}
+      style={{ backgroundColor: 'white', height: expanded ? '100%' : 120, ...style }}
     >
       {children}
     </ GestureRecognizer>
