@@ -35,6 +35,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 100
   },
+  image: { 
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain'
+  },
+  qrIcon: {
+    marginRight: 3
+  },
   address: {
     fontSize: 12
   },

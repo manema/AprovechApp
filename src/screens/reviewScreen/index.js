@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { Text, View, Image } from 'react-native';
 import { object } from 'prop-types';
 
-import LoginForm from 'components/forms/loginForm';
-
 import { QR_SCREEN } from 'constants/screens';
 import useNavigateOnLoginEffect from 'hooks/useNavigateOnLoginEffect';
 import Button from '../../components/common/button';
@@ -26,12 +24,12 @@ const ReviewQualification = () =>
     </Text>
   </View>
 
-const DiscountScreen = memo(({ navigation, discountIcon, commerceAddress, itemQualification, discounts }) => {
-  const { id } = navigation.state.params;
-  const currentDiscount = discounts.find(discount => discount.id === id);
+const ReviewScreen = memo(({ navigation, discountIcon, commerceAddress, itemQualification, discounts }) => {
+  const { qrId } = navigation.state.params;
+  const currentDiscount = discounts.find(discount => discount.id === qrId);
   if(!currentDiscount) return null;
   const { description, address, discountValue, discountType } = currentDiscount;
-  const handlePressGetDiscount = useCallback(() => navigation.navigate(QR_SCREEN, { qrId: id, creating: true }), [navigation]);
+  const handlePressGetDiscount = useCallback(() => navigation.navigate(QR_SCREEN, { qrId: id }), [navigation]);
 
   return (
     <View style={styles.container}>
@@ -62,11 +60,11 @@ const DiscountScreen = memo(({ navigation, discountIcon, commerceAddress, itemQu
   );
 });
 
-DiscountScreen.propTypes = {
+ReviewScreen.propTypes = {
   navigation: object.isRequired,
 };
 
-DiscountScreen.options = {
+ReviewScreen.options = {
   topBar: {
     title: {
       text: "Descuento",
@@ -81,4 +79,4 @@ const mapState = ({ commerce }) => ({
 export default connect(
   mapState,
   null
-)(DiscountScreen);
+)(ReviewScreen);

@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React, { Fragment, useEffect, useCallback } from 'react';
+import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import api from 'api';
 import {
   View,
@@ -17,12 +17,15 @@ import {
 import { connect } from 'react-redux';
 import { object } from 'prop-types';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import SearchInput, { createFilter } from 'react-native-search-filter';
+import { KEYS_TO_COMMERCE_FILTER } from 'constants/constants';
 
 import { getDataActions } from 'actions/getDataActions';
 import { getInterests } from 'actions/interestActions';
 import { getCommerces, getCommercesByInterest } from 'actions/commercesActions';
 import { getDiscounts } from 'actions/discountActions';
 import { DISCOUNT_SCREEN } from 'constants/screens';
+import { auxFilter } from 'utils/helpers'; 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LoginForm from 'components/forms/loginForm';
 import InterestBar from 'components/interestBar';
@@ -47,10 +50,16 @@ const MainScreen = ({
     getCommerces();
     getDiscounts();
   }, [getInterests, getCommerces, getDiscounts]);
-  console.log(navigation);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const handlePressDiscount = useCallback(id => navigation.navigate(DISCOUNT_SCREEN, { id }), [navigation]);
+  const commercesSearched = commerces && auxFilter(searchTerm, commerces);
+  const filteredDiscounts = discounts && discounts.filter(createFilter(searchTerm, KEYS_TO_COMMERCE_FILTER));
 
+  let allDiscounts = new Set(filteredDiscounts);
+  commercesSearched && commercesSearched.forEach(commerce => {
+    allDiscounts = new Set([...new Set(commerce.discounts), ...allDiscounts])
+  });
 
   return (
     <View style={styles.container}>
@@ -75,14 +84,18 @@ const MainScreen = ({
         </MapView>
       </View>
       <Swipe style={styles.swipe}>
-        {/* <SwipeChild discounts={discounts} interests={interests} onChangeBar={getCommercesByInterest} /> */}
-        <View style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
+        <View style={styles.swipeChildrenContainer}>
+          <SearchInput 
+            onChangeText={term => setSearchTerm(term)} 
+            style={styles.searchInput}
+            placeholder="Type a message to search"
+          />
           <InterestBar interests={interests} onChange={getCommercesByInterest}/>
-          {discounts && discounts.map(({ id, name, discountPercentage, dateStart, dateEnd, address }) =>
+          {allDiscounts && Array.from(allDiscounts).map(({ id, name, discountPercentage, dateStart, dateEnd, commerceAddress, interestDescription }) =>
             <Discount
               key={id}
               commerceName={name}
-              commerceAddress={address}
+              commerceAddress={commerceAddress}
               distanceToCommerce={1.2}
               dicountType="Accesorios"
               onChange={() => handlePressDiscount(id)}

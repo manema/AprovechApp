@@ -7,6 +7,9 @@ import LoginScreen from 'screens/loginScreen';
 import MainScreen from 'screens/mainScreen';
 import SignUpScreen from 'screens/SignUpScreen';
 import DiscountScreen from 'screens/discountScreen'
+import QRScreen from 'screens/QRScreen';
+import ListOfQrScreen from 'screens/listQrScreen';
+import ReviewScreen from 'screens/reviewScreen';
 import AppLoader from 'screens/appLoader';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -27,6 +30,9 @@ const AppStack = createDrawerNavigator(
       }, 
     },
     "LoginScreen": { screen: LoginScreen },
+    "Mis QRs": { screen: ListOfQrScreen },
+    "QRScreen": { screen: QRScreen },
+    "ReviewScreen": { screen: ReviewScreen }
   },
   {
     drawerWidth: 300,
@@ -36,7 +42,10 @@ const AppStack = createDrawerNavigator(
 );
 
 const MainStack = createStackNavigator({
-  DiscountScreen
+  DiscountScreen,
+  QRScreen,
+  ReviewScreen,
+  ListOfQrScreen
 });
 
 const AppNavigator = createAnimatedSwitchNavigator(

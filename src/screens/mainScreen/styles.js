@@ -19,6 +19,17 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     right: 0,
+  },
+  swipeChildrenContainer: { 
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: 30 
+  },
+  searchInput:{
+    padding: 10,
+    borderColor: '#CCC',
+    borderWidth: 1
   }
 });
 
