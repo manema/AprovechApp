@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>Aprovechapp would like access to your photo gallery to change your profile picture</string>
+  <key>NSCameraUsageDescription</key>
+  <string>Aprovechapp would like to use your camera to take a photo for your profile picture</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>Aprovechapp would like to save photos to your photo gallery</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
