@@ -14,3 +14,17 @@ export const SIGN_UP = {
 export const DISCOUNT_SCREEN = {
   btn: 'SOLICITAR DESCUENTO'
 }
+
+export const ACCOUNT_FORM = {
+  title: 'Mis datos',
+  name: 'Nombre',
+  lastName: 'Apellido',
+  email: 'Email',
+  btn: 'Confirmar'
+}
+
+export const ACCOUNT_SCREEN = {
+  title: 'Ajustes',
+  settings: 'Configuración',
+  passwordChange: 'Cambiar contraseña'
+}

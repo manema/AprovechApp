@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { connect } from 'react-redux';
 import { Text, View, Image } from 'react-native';
 import { object } from 'prop-types';
@@ -11,6 +11,7 @@ import AntFontsIcon from 'react-native-vector-icons/AntDesign';
 import { discountTypes } from 'constants/constants';
 import { DISCOUNT_SCREEN } from 'constants/strings';
 import { GREY, BLACK, YELLOW } from 'constants/style';
+import Review from 'components/review';
 import styles from './styles';
 
 const ReviewQualification = () => 
@@ -25,10 +26,12 @@ const ReviewQualification = () =>
   </View>
 
 const ReviewScreen = memo(({ navigation, discountIcon, commerceAddress, itemQualification, discounts }) => {
+  const [reviewValues, setReviewValues] = useState({ article: 1, commerce: 1, value: 1 });
+  const { article, commerce, value } = reviewValues;
   const { qrId } = navigation.state.params;
   const currentDiscount = discounts.find(discount => discount.id === qrId);
-  if(!currentDiscount) return null;
-  const { description, address, discountValue, discountType } = currentDiscount;
+  // if(!currentDiscount) return null;
+  const { description, address, discountValue, discountType } = currentDiscount || {};
   const handlePressGetDiscount = useCallback(() => navigation.navigate(QR_SCREEN, { qrId: id }), [navigation]);
 
   return (
@@ -52,6 +55,21 @@ const ReviewScreen = memo(({ navigation, discountIcon, commerceAddress, itemQual
       </View>
       <View style={styles.descriptionSection}>
         <Text style={styles.description}>{description}</Text>
+        <Review 
+          text="Articulo" 
+          currentScore={article}
+          onChange={articleReview => setReviewValues(state => ({...state, article: articleReview }))} 
+        />
+        <Review 
+          text="Valor"
+          currentScore={value}
+          onChange={valueReview => setReviewValues(state => ({...state, value: valueReview }))}
+        />
+        <Review 
+          text="Atención"
+          currentScore={commerce}
+          onChange={commerceReview => setReviewValues(state => ({...state, commerce: commerceReview }))}
+        />
         <View style={styles.btnContainer}>
           <Button text={DISCOUNT_SCREEN.btn} textAddedStyle={styles.btn} onPress={() => handlePressGetDiscount()} />
         </View>
