@@ -28,3 +28,10 @@ export const ACCOUNT_SCREEN = {
   settings: 'Configuración',
   passwordChange: 'Cambiar contraseña'
 }
+
+export const RESET_PASSWORD_SCREEN = {
+  password: 'Contraseña anterior',
+  newPassword: 'Nueva contraseña',
+  newPasswordConfirmation: 'Repita la nueva contraseña',
+  submitBtnText: 'Confirmar'
+}

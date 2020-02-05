@@ -12,6 +12,7 @@ import ListOfQrScreen from 'screens/listQrScreen';
 import ReviewScreen from 'screens/reviewScreen';
 import AppLoader from 'screens/appLoader';
 import Account from 'screens/account';
+import ResetPasswordScreen from 'screens/resetPasswordScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const AuthStack = createStackNavigator({ 
@@ -34,7 +35,8 @@ const AppStack = createDrawerNavigator(
     "Mis QRs": { screen: ListOfQrScreen },
     "QRScreen": { screen: QRScreen },
     "ReviewScreen": { screen: ReviewScreen },
-    "Account": { screen: Account }
+    "Account": { screen: Account },
+    "ResetPasswordScreen": { screen: ResetPasswordScreen } 
   },
   {
     drawerWidth: 300,

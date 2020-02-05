@@ -59,8 +59,6 @@ const Account = memo(({ navigation }) => {
     }
   });
 
-  console.log(avatarImage);
-
   return (
     <KeyboardAvoidingView style={styles.container} enabled={false} behavior="height">
       <View style={styles.topSideContainer}>

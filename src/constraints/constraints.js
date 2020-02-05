@@ -40,3 +40,19 @@ export let signUpConstraints = {
     equality: 'password'
   }
 };
+
+export let resetPasswordConstraints = {
+  password : {
+    presence: true,
+    length: { minimum: 8 }
+  },
+  newPassword: {
+    presence: true,
+    length: { minimum: 8 }
+  },
+  newPasswordConfirm : {
+    presence: true,
+    length: { minimum: 8 },
+    equality: 'newPassword'
+  }
+}
