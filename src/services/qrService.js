@@ -5,8 +5,8 @@ class QRService {
     return api.get('/QrCode');
   }
 
-  static createQr(discountId) {
-    return api.get(`/QrCode/${discountId}`);
+  static createQr(discountId, idCommerce) {
+    return api.get(`/QrCode/CreateQR?idDiscount=${discountId}&idCommerce=${idCommerce}`);
   }
 
   static getQr(qrId) {

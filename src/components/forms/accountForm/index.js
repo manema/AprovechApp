@@ -17,9 +17,10 @@ const AccountForm = ({ onSubmit, children }) => (
         <View style={styles.fieldsContainer}>
           <Text style={styles.title}>{ACCOUNT_FORM.title}</Text>
           {submitError && <Text>{submitError}</Text>}
-          <Field name="name" label="Nombre" component={Input} addedStyle={styles.inputStyle} />
-          <Field name="lastName" label="Apellido" component={Input} addedStyle={styles.inputStyle} />
-          <Field name="email" label="Email" component={Input} addedStyle={styles.inputStyle} />
+          <Field name="name" label={ACCOUNT_FORM.name} component={Input} addedStyle={styles.inputStyle} />
+          <Field name="lastName" label={ACCOUNT_FORM.lastName} component={Input} addedStyle={styles.inputStyle} />
+          <Field name="email" label={ACCOUNT_FORM.email} component={Input} addedStyle={styles.inputStyle} />
+          <Field name="phone" label={ACCOUNT_FORM.phone} component={Input} addedStyle={styles.inputStyle} />
         </View>
         {children && <View style={styles.childrenContainer}>{children}</View>}
         {submitting ? (

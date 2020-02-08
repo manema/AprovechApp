@@ -20,12 +20,12 @@ export const ACCOUNT_FORM = {
   name: 'Nombre',
   lastName: 'Apellido',
   email: 'Email',
+  phone: 'Número de telefono',
   btn: 'Confirmar'
 }
 
 export const ACCOUNT_SCREEN = {
   title: 'Ajustes',
-  settings: 'Configuración',
   passwordChange: 'Cambiar contraseña'
 }
 

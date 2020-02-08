@@ -3,12 +3,12 @@ import { RED, WHITE } from 'constants/style';
 
 const styles = StyleSheet.create({
   container: {
-    height: '15%',
-    maxHeight: 100,
+    maxHeight: 84,
     width: '100%',
     zIndex: 999
   },
   content: {
+    minHeight: '15%',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',

@@ -31,6 +31,7 @@ import LoginForm from 'components/forms/loginForm';
 import InterestBar from 'components/interestBar';
 import Discount from 'components/discount';
 import Swipe from 'components/swipe';
+import Loader from 'components/common/loader';
 import styles from './styles';
 
 const MainScreen = ({ 
@@ -43,7 +44,10 @@ const MainScreen = ({
   interests,
   commerces,
   discounts,
-  navigation
+  navigation,
+  isInterestLoading,
+  isCommerceLoading,
+  isGettingCommerceById
 }) => {
   useEffect(() => {
     getInterests();
@@ -51,8 +55,9 @@ const MainScreen = ({
     getDiscounts();
   }, [getInterests, getCommerces, getDiscounts]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isSwipeUp, setIsSwipeUp] = useState(false);
 
-  const handlePressDiscount = useCallback(id => navigation.navigate(DISCOUNT_SCREEN, { id }), [navigation]);
+  const handlePressDiscount = useCallback((id, idCommerce) => navigation.navigate(DISCOUNT_SCREEN, { id, idCommerce }), [navigation]);
   const commercesSearched = commerces && auxFilter(searchTerm, commerces);
   const filteredDiscounts = discounts && discounts.filter(createFilter(searchTerm, KEYS_TO_COMMERCE_FILTER));
 
@@ -61,8 +66,13 @@ const MainScreen = ({
     allDiscounts = new Set([...new Set(commerce.discounts), ...allDiscounts])
   });
 
+  const isLoading = isCommerceLoading || isInterestLoading;
+
   return (
     <View style={styles.container}>
+      { isLoading ? 
+        <Loader /> :
+      <>
       <View style={styles.mapContainer}>
         <MapView
           provider={PROVIDER_GOOGLE}
@@ -83,26 +93,32 @@ const MainScreen = ({
           ))}
         </MapView>
       </View>
-      <Swipe style={styles.swipe}>
-        <View style={styles.swipeChildrenContainer}>
-          <SearchInput 
-            onChangeText={term => setSearchTerm(term)} 
-            style={styles.searchInput}
-            placeholder="Type a message to search"
-          />
+      <Swipe style={styles.swipe} handleSwipeUp={setIsSwipeUp}>
+        <View style={[styles.swipeChildrenContainer, isSwipeUp && styles.swipeChildrenContainerMarginBottom]}>
+          { 
+            isSwipeUp &&
+            <SearchInput 
+              onChangeText={term => setSearchTerm(term)} 
+              style={styles.searchInput}
+              inputViewStyles={{ width: '90%' }}
+              placeholder="Busca tus descuentos favoritos"
+            />
+          }
           <InterestBar interests={interests} onChange={getCommercesByInterest}/>
-          {allDiscounts && Array.from(allDiscounts).map(({ id, name, discountPercentage, dateStart, dateEnd, commerceAddress, interestDescription }) =>
+          {isSwipeUp && allDiscounts && Array.from(allDiscounts).map(({ idTemp, id, idCommerce, name, discountPercentage, dateStart, dateEnd, address, interestDescription }) =>
             <Discount
-              key={id}
+              key={idTemp}
               commerceName={name}
-              commerceAddress={commerceAddress}
+              commerceAddress={address}
               distanceToCommerce={1.2}
               dicountType="Accesorios"
-              onChange={() => handlePressDiscount(id)}
+              onChange={() => handlePressDiscount(id, idCommerce)}
             />
           )}
         </View>
       </ Swipe>
+      </>
+      }
     </View>
   );
 };
@@ -114,7 +130,10 @@ MainScreen.propTypes = {
 const mapState = ({ interest, commerce, discount }) => ({
   interests: interest.interests,
   commerces: commerce.commerces,
-  discounts: commerce.allDiscounts
+  discounts: commerce.allDiscounts,
+  isInterestLoading: interest.loading,
+  isCommerceLoading: commerce.loading,
+  isGettingCommerceById: commerce.isGettingCommerceById
 });
 
 const mapDispatch = { getDataActions, getInterests, getCommerces, getCommercesByInterest, getDiscounts };

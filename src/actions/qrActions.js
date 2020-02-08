@@ -53,10 +53,10 @@ const getListOfQrsError = error => ({
   payload: { error }
 });
 
-export const createQr = discountId => async dispatch => {
+export const createQr = (discountId, idCommerce) => async dispatch => {
   try {
     dispatch(createQrAction());
-    const { data: { results }} = await qrService.createQr(discountId);
+    const { data: { results }} = await qrService.createQr(discountId, idCommerce);
     dispatch(createQrSuccess(results));
   } catch (err) {
     dispatch(createQrError(err));

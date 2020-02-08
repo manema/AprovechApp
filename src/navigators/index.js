@@ -14,11 +14,28 @@ import AppLoader from 'screens/appLoader';
 import Account from 'screens/account';
 import ResetPasswordScreen from 'screens/resetPasswordScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import { BLACK } from 'constants/style';
 
 const AuthStack = createStackNavigator({ 
   LoginScreen,
   SignUpScreen,
 });
+
+const QRStack = createStackNavigator({
+  ListOfQrScreen,
+  ReviewScreen,
+  QRScreen
+});
+
+
+const DiscountStack = createStackNavigator({
+  DiscountScreen,
+  QRScreen,
+  MainScreen
+});
+
 
 const AppStack = createDrawerNavigator(
   {
@@ -31,11 +48,21 @@ const AppStack = createDrawerNavigator(
         ),
       }, 
     },
-    "LoginScreen": { screen: LoginScreen },
-    "Mis QRs": { screen: ListOfQrScreen },
-    "QRScreen": { screen: QRScreen },
+    // "Mis QRs": { screen: QRStack },
+    'Mis QR': {
+      screen: QRStack,
+      navigationOptions: {
+        drawerIcon: <Icon name="qrcode" size={30} color={BLACK} />
+      }
+    },
+    // "QRScreen": { screen: QRScreen },
     "ReviewScreen": { screen: ReviewScreen },
-    "Account": { screen: Account },
+    "Account": { 
+      screen: Account,
+      navigationOptions: {
+        drawerIcon: <Ionicons name="ios-person" size={30} color={BLACK} />
+      }
+    },
     "ResetPasswordScreen": { screen: ResetPasswordScreen } 
   },
   {
@@ -45,19 +72,35 @@ const AppStack = createDrawerNavigator(
   }
 );
 
-const MainStack = createStackNavigator({
+const AuxStack = createStackNavigator({
+  "AppStack": { 
+    screen: AppStack,
+    navigationOptions: {
+      headerLeft: null,
+      headerShown: false,
+      header: null
+    }, 
+  },
   DiscountScreen,
-  QRScreen,
-  ReviewScreen,
-  ListOfQrScreen
+  QRScreen
 });
+
+const MainStack = createStackNavigator({
+  // DiscountScreen,
+  // QRScreen,
+  ReviewScreen,
+  // ListOfQrScreen
+});
+
 
 const AppNavigator = createAnimatedSwitchNavigator(
   {
     AppLoader,
     AuthStack,
-    AppStack,
-    MainStack
+    AuxStack,
+    // DiscountStack,
+    // QRStack
+    // MainStack
   },
   {
     initialRouteName: 'AuthStack',

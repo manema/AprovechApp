@@ -27,11 +27,11 @@ const ReviewQualification = () =>
   </View>
 
 const DiscountScreen = memo(({ navigation, discountIcon, commerceAddress, itemQualification, discounts }) => {
-  const { id } = navigation.state.params;
-  const currentDiscount = discounts.find(discount => discount.id === id);
+  const { id, idCommerce } = navigation.state.params;
+  const currentDiscount = discounts.find(discount => discount.id === id && discount.idCommerce == idCommerce);
   if(!currentDiscount) return null;
   const { description, address, discountValue, discountType } = currentDiscount;
-  const handlePressGetDiscount = useCallback(() => navigation.navigate(QR_SCREEN, { qrId: id, creating: true }), [navigation]);
+  const handlePressGetDiscount = useCallback(() => navigation.navigate(QR_SCREEN, { qrId: id, idCommerce, creating: true }), [navigation]);
 
   return (
     <View style={styles.container}>

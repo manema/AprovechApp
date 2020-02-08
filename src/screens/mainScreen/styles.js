@@ -3,11 +3,11 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFillObject
   },
   mapContainer: {
     ...StyleSheet.absoluteFillObject,
-    height: '85%',
+    minHeight: '85%',
     width: '100%',
     justifyContent: 'flex-end',
     alignItems: 'center',
@@ -19,17 +19,25 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     right: 0,
+    borderTopEndRadius: 30,
+    borderTopLeftRadius: 30,
+    borderWidth: 1,
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
   },
   swipeChildrenContainer: { 
     height: '100%',
     display: 'flex',
-    alignItems: 'center',
-    marginTop: 30 
+    alignItems: 'center'
+  },
+  swipeChildrenContainerMarginBottom: { 
+    marginTop: 35
   },
   searchInput:{
     padding: 10,
     borderColor: '#CCC',
-    borderWidth: 1
+    borderWidth: 1,
+    alignSelf: 'center',
+    width: '90%'
   }
 });
 

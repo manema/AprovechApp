@@ -6,7 +6,8 @@ export const initialState = {
   commerces: null,
   allDiscounts: [],
   error: null,
-  loading: null
+  loading: null,
+  isGettingCommerceById: null
 };
 
 const handleGetCommerces = (state, { commerces }) => {
@@ -21,6 +22,7 @@ const handleGetCommerces = (state, { commerces }) => {
 
   state.commerces = commerces;
   state.error = null;
+  state.isGettingCommerceById = false;
   state.loading = false;
   state.allDiscounts = allDiscounts;
 }
@@ -37,11 +39,11 @@ export default createReducer(initialState, {
   },
   [GET_COMMERCES_BY_INTEREST]: state => {
     state.error = null;
-    state.loading = true;
+    state.isGettingCommerceById = true;
   },
   [GET_COMMERCES_BY_INTEREST_SUCCESS]: handleGetCommerces,
   [GET_COMMERCES_BY_INTEREST_ERROR]: (state, { error }) => {
     state.error = error;
-    state.loading = false;
+    state.isGettingCommerceById = false;
   },
 });

@@ -29,9 +29,6 @@ const Settings = () =>
   <View>
     <Text style={[styles.settingTitle, styles.settingChildren]}>{ACCOUNT_SCREEN.title}</Text>
     <TouchableOpacity style={[styles.settingButtons, styles.settingChildren]} onPress={() => {}}>
-      <Text>{ACCOUNT_SCREEN.settings}</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={[styles.settingButtons, styles.settingChildren]} onPress={() => {}}>
       <Text>{ACCOUNT_SCREEN.passwordChange}</Text>
     </TouchableOpacity>
   </View>

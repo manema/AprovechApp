@@ -17,14 +17,6 @@ const ResetPasswordForm = ({ onSubmit }) => (
         <Field name="password" label={RESET_PASSWORD_SCREEN.password} component={Input} password />
         <Field name="newPassword" label={RESET_PASSWORD_SCREEN.newPassword} component={Input} password />
         <Field name="newPasswordConfirm" label={RESET_PASSWORD_SCREEN.newPasswordConfirmation} component={Input} password />
-        {/* <View style={[styles.btnForget, styles.btnContainer]}>
-          <Button
-            addedStyle={{ width: 400 }}
-            text={LOGIN.forgotPassword}
-            onPress={()=>{}}
-            secondary
-          />
-        </View> */}
         <View style={styles.btnResetContainer}>
           {submitting ? (
             <ActivityIndicator />

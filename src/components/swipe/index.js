@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { node, number } from 'prop-types';
+import { func, node, number } from 'prop-types';
 import { TouchableOpacity, Text, LayoutAnimation } from 'react-native';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import { enableAndroidAnimation } from 'utils/helpers';
@@ -11,18 +11,21 @@ enableAndroidAnimation();
 
 const Swipe = ({
   children,
-  style
+  style,
+  handleSwipeUp
 }) => {
   const [expanded, setExpanded] = useState(false);
 
   const onSwipeUp = gestureState => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setExpanded(true);
+    handleSwipeUp(showSearchInput => !showSearchInput);
   }
 
   const onSwipeDown = gestureState => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     setExpanded(false);
+    handleSwipeUp(showSearchInput => !showSearchInput);
   }
 
   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -32,7 +35,7 @@ const Swipe = ({
       onSwipeUp={onSwipeUp}
       onSwipeDown={onSwipeDown}
       config={config}
-      style={{ backgroundColor: 'white', height: expanded ? '100%' : 120, ...style }}
+      style={{ backgroundColor: 'white', height: expanded ? '100%' : 90, ...style }}
     >
       {children}
     </ GestureRecognizer>
@@ -40,7 +43,8 @@ const Swipe = ({
 }
 
 Swipe.propTypes = {
-  children: node
+  children: node,
+  handleSwipeUp: func
 };
 
 export default Swipe;
