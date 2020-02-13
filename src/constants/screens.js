@@ -7,3 +7,4 @@ export const LIST_OF_QRS_SCREEN = 'ListOfQrScreen';
 export const REVIEW_SCREEN = 'ReviewScreen';
 export const ACCOUNT_SCREEN = 'Account';
 export const RESET_PASSWORD_SCREEN = 'ResetPasswordScreen'
+export const INTEREST_SCREEN = 'InterestScreen';

@@ -2,51 +2,65 @@ import React, { memo, useCallback, useState } from 'react';
 import { connect } from 'react-redux';
 import { Text, View, Image } from 'react-native';
 import { object } from 'prop-types';
+import qrService from 'services/qrService';
+import Toast from 'react-native-simple-toast';
 
-import { QR_SCREEN } from 'constants/screens';
+import { LIST_OF_QRS_SCREEN } from 'constants/screens';
 import useNavigateOnLoginEffect from 'hooks/useNavigateOnLoginEffect';
 import Button from '../../components/common/button';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import AntFontsIcon from 'react-native-vector-icons/AntDesign';
 import { discountTypes } from 'constants/constants';
-import { DISCOUNT_SCREEN } from 'constants/strings';
+import { REVIEW_SCREEN } from 'constants/strings';
 import { GREY, BLACK, YELLOW } from 'constants/style';
 import Review from 'components/review';
 import styles from './styles';
 
-const ReviewQualification = () => 
+const ReviewQualification = ({ kind }) => 
   <View style={styles.reviewComponentContainer}>
     <View style={styles.reviewValueSection}>
       <Text style={styles.reviewValue}>{4.4}
       </Text>
       <AntFontsIcon name='star' size={15} color={YELLOW} />
     </View>
-    <Text style={styles.reviewTitle}>Articulo
-    </Text>
+    <Text style={styles.reviewTitle}>{kind}</Text>
   </View>
 
 const ReviewScreen = memo(({ navigation, discountIcon, commerceAddress, itemQualification, discounts }) => {
   const [reviewValues, setReviewValues] = useState({ article: 1, commerce: 1, value: 1 });
   const { article, commerce, value } = reviewValues;
-  const { qrId } = navigation.state.params;
+  const { qrId, idDiscount, idCommerce, commerceImage } = navigation.state.params;
   const currentDiscount = discounts.find(discount => discount.id === qrId);
-  // if(!currentDiscount) return null;
+
   const { description, address, discountValue, discountType } = currentDiscount || {};
-  const handlePressGetDiscount = useCallback(() => navigation.navigate(QR_SCREEN, { qrId: id }), [navigation]);
+  const handleSuccessfulReview = useCallback(() => navigation.navigate(LIST_OF_QRS_SCREEN), [navigation]);
+
+  const handleReviewQr = async dispatch => {
+    const dataToReview = {...reviewValues, idQr: qrId, idDiscount, idCommerce };
+    dataToReview.commerceValued = dataToReview.commerce;
+    delete dataToReview.commerce;
+    try {
+      await qrService.reviewQr(dataToReview);
+      Toast.showWithGravity('Gracias por su valoración!', Toast.LONG, Toast.CENTER);
+      setTimeout(() => handleSuccessfulReview(), 4000);
+    } catch (err) {
+      Toast.showWithGravity('Algo no funcionó, por favor contacta al soporte tecnico.', Toast.LONG, Toast.CENTER);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        {discountIcon ? <Image source={discountIcon} /> : <View style={styles.placeholderIcon}><Icon name="store-alt" size={50} color={BLACK} /></View>}
+        {commerceImage ? <Image style={{ resizeMode: 'contain', flex: 1 }} source={{ uri: `data:image/gif;base64,${commerceImage}`}} /> : <View style={styles.placeholderIcon}><Icon name="store-alt" size={50} color={BLACK} /></View>}
         <View style={styles.addressContainer}>
           <Icon name="map-marker-alt" size={15} color={GREY} />
           <Text style={styles.address}>{address}</Text>
         </View>
       </View>
       <View style={styles.reviewContainer}>
-        <ReviewQualification />
-        <ReviewQualification />
-        <ReviewQualification />
+        <ReviewQualification kind={REVIEW_SCREEN.article} />
+        <ReviewQualification kind={REVIEW_SCREEN.value} />
+        <ReviewQualification kind={REVIEW_SCREEN.atention} />
         <View style={styles.discountContainer}>
           <Text style={styles.discountValue}>
             {`${discountType === discountTypes.value ? `$${discountValue}` : `${discountValue}%`}`}
@@ -54,24 +68,23 @@ const ReviewScreen = memo(({ navigation, discountIcon, commerceAddress, itemQual
         </View>
       </View>
       <View style={styles.descriptionSection}>
-        <Text style={styles.description}>{description}</Text>
         <Review 
-          text="Articulo" 
+          text={REVIEW_SCREEN.article} 
           currentScore={article}
           onChange={articleReview => setReviewValues(state => ({...state, article: articleReview }))} 
         />
         <Review 
-          text="Valor"
+          text={REVIEW_SCREEN.value}
           currentScore={value}
           onChange={valueReview => setReviewValues(state => ({...state, value: valueReview }))}
         />
         <Review 
-          text="Atención"
+          text={REVIEW_SCREEN.atention}
           currentScore={commerce}
           onChange={commerceReview => setReviewValues(state => ({...state, commerce: commerceReview }))}
         />
         <View style={styles.btnContainer}>
-          <Button text={DISCOUNT_SCREEN.btn} textAddedStyle={styles.btn} onPress={() => handlePressGetDiscount()} />
+          <Button text={REVIEW_SCREEN.btn} textAddedStyle={styles.btn} onPress={handleReviewQr} />
         </View>
       </View>
     </View>
@@ -95,6 +108,5 @@ const mapState = ({ commerce }) => ({
 });
 
 export default connect(
-  mapState,
-  null
+  mapState
 )(ReviewScreen);

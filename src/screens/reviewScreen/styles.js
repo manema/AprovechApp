@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
   descriptionSection: {
     display: 'flex',
     alignSelf: 'center',
+    marginTop: 15,
     flex: 1,
     width: '90%'
   },

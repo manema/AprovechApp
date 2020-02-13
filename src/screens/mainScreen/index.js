@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
 
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import api from 'api';
@@ -49,6 +42,12 @@ const MainScreen = ({
   isCommerceLoading,
   isGettingCommerceById
 }) => {
+
+  const handleCommerceClick = commerceId => {
+    setUseIndividualCommerceDiscounts(commerceId);
+    setTriggerSwipeUp(triggerSwipeUp => !triggerSwipeUp);
+  };
+
   useEffect(() => {
     getInterests();
     getCommerces();
@@ -56,13 +55,17 @@ const MainScreen = ({
   }, [getInterests, getCommerces, getDiscounts]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isSwipeUp, setIsSwipeUp] = useState(false);
+  const [triggerSwipeUp, setTriggerSwipeUp] = useState();
+  const [useIndividualCommerceDiscounts, setUseIndividualCommerceDiscounts] = useState(null);
 
   const handlePressDiscount = useCallback((id, idCommerce) => navigation.navigate(DISCOUNT_SCREEN, { id, idCommerce }), [navigation]);
   const commercesSearched = commerces && auxFilter(searchTerm, commerces);
-  const filteredDiscounts = discounts && discounts.filter(createFilter(searchTerm, KEYS_TO_COMMERCE_FILTER));
+  const individualFilteredDiscounts = commerces && commerces.find(({ id }) => id === useIndividualCommerceDiscounts);
+  const discountsToFilter = (individualFilteredDiscounts && individualFilteredDiscounts.discounts) || discounts;
+  const filteredDiscounts = discountsToFilter && discountsToFilter.filter(createFilter(searchTerm, KEYS_TO_COMMERCE_FILTER));
 
   let allDiscounts = new Set(filteredDiscounts);
-  commercesSearched && commercesSearched.forEach(commerce => {
+  !individualFilteredDiscounts && commercesSearched && commercesSearched.forEach(commerce => {
     allDiscounts = new Set([...new Set(commerce.discounts), ...allDiscounts])
   });
 
@@ -84,16 +87,17 @@ const MainScreen = ({
             longitudeDelta: 0.0421,
           }}
         >
-          {commerces && commerces.map(({ latitude, longitude, name, address }) => (
+          {commerces && commerces.map(({ latitude, longitude, name, address, id }) => (
             <Marker
               coordinate={{ latitude, longitude}}
               title={name}
               description={address}
+              onPress={() => handleCommerceClick(id)}
             />
           ))}
         </MapView>
       </View>
-      <Swipe style={styles.swipe} handleSwipeUp={setIsSwipeUp}>
+      <Swipe style={styles.swipe} handleSwipeUp={setIsSwipeUp} triggerSwipeUp={triggerSwipeUp} handleSwipeDown={setUseIndividualCommerceDiscounts}>
         <View style={[styles.swipeChildrenContainer, isSwipeUp && styles.swipeChildrenContainerMarginBottom]}>
           { 
             isSwipeUp &&

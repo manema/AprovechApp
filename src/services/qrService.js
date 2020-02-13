@@ -12,6 +12,10 @@ class QRService {
   static getQr(qrId) {
     return api.get(`/QrCode/GetQRId/${qrId}`);
   }
+
+  static reviewQr(review) {
+    return api.post("/Review", review);
+  }
 }
 
 export default QRService;

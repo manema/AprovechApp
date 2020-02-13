@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { func, node, number } from 'prop-types';
+import React, { useState, useEffect, useRef } from 'react';
+import { func, node, number, bool } from 'prop-types';
 import { TouchableOpacity, Text, LayoutAnimation } from 'react-native';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import { enableAndroidAnimation } from 'utils/helpers';
@@ -12,9 +12,17 @@ enableAndroidAnimation();
 const Swipe = ({
   children,
   style,
-  handleSwipeUp
+  handleSwipeUp,
+  triggerSwipeUp,
+  handleSwipeDown
 }) => {
   const [expanded, setExpanded] = useState(false);
+  const firstUpdate = useRef(true);
+
+  useEffect(() => {
+    if (!firstUpdate.current) onSwipeUp();
+    firstUpdate.current = false;
+  }, [triggerSwipeUp]);
 
   const onSwipeUp = gestureState => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -24,6 +32,7 @@ const Swipe = ({
 
   const onSwipeDown = gestureState => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    handleSwipeDown(null);
     setExpanded(false);
     handleSwipeUp(showSearchInput => !showSearchInput);
   }
@@ -44,7 +53,9 @@ const Swipe = ({
 
 Swipe.propTypes = {
   children: node,
-  handleSwipeUp: func
+  handleSwipeUp: func,
+  triggerSwipeUp: bool,
+  handleSwipeDown: func
 };
 
 export default Swipe;

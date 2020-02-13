@@ -8,7 +8,10 @@ import {
   GET_QR_BY_ID_ERROR,
   GET_LIST_OF_QRS,
   GET_LIST_OF_QRS_SUCCESS,
-  GET_LIST_OF_QRS_ERROR
+  GET_LIST_OF_QRS_ERROR,
+  REVIEW_QR,
+  REVIEW_QR_SUCCESS,
+  REVIEW_QR_ERROR
 } from './actionTypes';
 
 const createQrAction = () => ({
@@ -53,6 +56,21 @@ const getListOfQrsError = error => ({
   payload: { error }
 });
 
+const reviewQrAction = () => ({
+  type: REVIEW_QR
+});
+
+const reviewQrActionSuccess = qrs => ({
+  type: REVIEW_QR_SUCCESS,
+  payload: { allQRs: qrs }
+});
+
+const reviewQrActionError = error => ({
+  type: REVIEW_QR_ERROR,
+  payload: { error }
+});
+
+
 export const createQr = (discountId, idCommerce) => async dispatch => {
   try {
     dispatch(createQrAction());
@@ -82,3 +100,15 @@ export const getListOfQrs = () => async dispatch => {
     dispatch(getListOfQrsError(err));
   }
 };
+
+// export const reviewQr = dataToReview => async dispatch => {
+//   dataToReview.commerceValued = dataToReview.commerce;
+//   delete dataToReview.commerce;
+//   try {
+//     dispatch(reviewQrAction());
+//     const { data: { results }} = await qrService.reviewQr(dataToReview);
+//     dispatch(reviewQrActionSuccess(results));
+//   } catch (err) {
+//     dispatch(reviewQrActionError(err));
+//   }
+// };

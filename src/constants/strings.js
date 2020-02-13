@@ -15,6 +15,13 @@ export const DISCOUNT_SCREEN = {
   btn: 'SOLICITAR DESCUENTO'
 }
 
+export const REVIEW_SCREEN = {
+  btn: 'VALORAR',
+  article: 'Artículo',
+  value: 'Valor',
+  atention: 'Atención'
+}
+
 export const ACCOUNT_FORM = {
   title: 'Mis datos',
   name: 'Nombre',

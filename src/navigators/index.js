@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { ScrollView } from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
+import SafeAreaView from 'react-native-safe-area-view';
 import LoginScreen from 'screens/loginScreen';
 import MainScreen from 'screens/mainScreen';
 import SignUpScreen from 'screens/SignUpScreen';
@@ -13,6 +14,7 @@ import ReviewScreen from 'screens/reviewScreen';
 import AppLoader from 'screens/appLoader';
 import Account from 'screens/account';
 import ResetPasswordScreen from 'screens/resetPasswordScreen';
+import InterestScreen from 'screens/interestScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -36,6 +38,16 @@ const DiscountStack = createStackNavigator({
   MainScreen
 });
 
+const DrawerContent = props =>
+  <ScrollView>
+    <SafeAreaView
+      // style={styles.container}
+      forceInset={{ top: 'always', horizontal: 'never' }}
+    >
+      <DrawerItems {...props} />
+    </SafeAreaView>
+  </ScrollView>
+
 
 const AppStack = createDrawerNavigator(
   {
@@ -47,6 +59,14 @@ const AppStack = createDrawerNavigator(
           <Icon name="bars" size={30} color="#900" />
         ),
       }, 
+    },
+    'InterestScreen': {
+      screen: InterestScreen,
+      navigationOptions: {
+        drawerLabel: 'Mis intereses',
+        drawerIcon:
+          <Icon name="heart" size={25} color={BLACK} />
+      }
     },
     // "Mis QRs": { screen: QRStack },
     'Mis QR': {
@@ -66,6 +86,15 @@ const AppStack = createDrawerNavigator(
     "ResetPasswordScreen": { screen: ResetPasswordScreen } 
   },
   {
+    // contentComponent: (props) => (
+    //   <ScrollView>
+    //     <SafeAreaView
+    //       // style={styles.container}
+    //       forceInset={{ top: 'always', horizontal: 'never' }}
+    //     >
+    //       <DrawerItems {...props} />
+    //     </SafeAreaView>
+    //   </ScrollView>),
     drawerWidth: 300,
     drawerPosition: 'left',
     initialRouteName: 'MainScreen',

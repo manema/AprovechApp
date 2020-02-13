@@ -56,10 +56,8 @@ const signUpError = error => ({
 
 export const login = user => async dispatch => {
   try {
-    console.log(user);
     dispatch(loginRequest());
     const { data } = await userService.login(user);
-    console.log(data);
     await sessionService.saveUser(data.user);
     dispatch(loginSuccess());
   } catch (err) {

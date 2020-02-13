@@ -25,6 +25,7 @@
     "react-native-reanimated": "^1.3.0",
     "react-native-screens": "^2.0.0-alpha.4",
     "react-native-search-filter": "^0.1.5",
+    "react-native-simple-toast": "^1.0.0",
     "react-native-swipe-gestures": "git+https://github.com/devstar217/react-native-swipe-gestures.git",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^4.0.10",

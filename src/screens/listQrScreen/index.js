@@ -1,6 +1,8 @@
 import React, { memo, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { View, Text, ScrollView, Image } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { NavigationEvents } from 'react-navigation';
 import { object } from 'prop-types';
 import { connect } from 'react-redux';
 import { REVIEW_SCREEN, QR_SCREEN } from 'constants/screens';
@@ -13,18 +15,26 @@ import Loader from 'components/common/loader';
 const ListQrScreen = memo(({ loading, navigation, getListOfQrs, allQrs }) => {
 
   
-  const handlePressQr = useCallback((qrId, consumed) => navigation.navigate(consumed ? REVIEW_SCREEN : QR_SCREEN, { qrId, creating: false }), [navigation]);
-  
-  useEffect(() => {
-    getListOfQrs();
-  }, [getListOfQrs]);
+  const handlePressQr = useCallback((qrId, consumed, idDiscount, idCommerce, commerceImage) => navigation.navigate(consumed ? REVIEW_SCREEN : QR_SCREEN, { qrId, creating: false, idDiscount, idCommerce, commerceImage }), [navigation]);
+  const handleOnScreenFocus = useCallback(() => getListOfQrs(), [getListOfQrs]);
 
   return (
+    <>
+    <NavigationEvents onWillFocus={handleOnScreenFocus} />
     <View style={{ flex: 1 }}> 
     {
       loading ? <Loader /> :
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent} centerContent>
-        {!!allQrs.length && allQrs.map(({ qrId, commerceName, commerceAddres, commerceImage, consumed, interestDescription }) => 
+        {!!allQrs.length && allQrs.map(({
+            qrId,
+            commerceName,
+            commerceAddres,
+            commerceImage,
+            consumed,
+            interestDescription,
+            idDiscount,
+            idCommerce
+          }) => 
           <Discount
             key={qrId} 
             isQr
@@ -34,12 +44,13 @@ const ListQrScreen = memo(({ loading, navigation, getListOfQrs, allQrs }) => {
             distanceToCommerce={1.2}
             interestDescription={interestDescription}
             discountIcon={commerceImage}
-            onChange={() => handlePressQr(qrId, consumed)}
+            onChange={() => handlePressQr(qrId, consumed, idDiscount, idCommerce, commerceImage)}
           />
         )}
       </ScrollView>
     }
     </View>
+    </>
   );
 });
 
