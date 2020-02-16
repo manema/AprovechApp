@@ -13,6 +13,12 @@ export const actionTypes = {
   LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
   LOGOUT_REQUEST: 'LOGOUT_REQUEST',
   LOGOUT_ERROR: 'LOGOUT_ERROR',
+  GET_ACCOUNT_DATA: 'GET_ACCOUNT_DATA',
+  GET_ACCOUNT_DATA_SUCCESS: 'GET_ACCOUNT_DATA_SUCCESS',
+  GET_ACCOUNT_DATA_ERROR: 'GET_ACCOUNT_DATA_ERROR',
+  UPDATE_ACCOUNT_DATA: 'UPDATE_ACCOUNT_DATA',
+  UPDATE_ACCOUNT_DATA_SUCCESS: 'UPDATE_ACCOUNT_DATA_SUCCESS',
+  UPDATE_ACCOUNT_DATA_ERROR: 'UPDATE_ACCOUNT_DATA_ERROR'
 };
 
 const loginSuccess = () => ({
@@ -54,11 +60,37 @@ const signUpError = error => ({
   error,
 });
 
+const getAccountDataRequest = () => ({
+  type: actionTypes.GET_ACCOUNT_DATA,
+});
+
+const getAccountDataSuccess = () => ({
+  type: actionTypes.GET_ACCOUNT_DATA_SUCCESS,
+});
+
+const getAccountDataError = error => ({
+  type: actionTypes.GET_ACCOUNT_DATA_ERROR,
+  error,
+});
+
+const updateAccountDataRequest = () => ({
+  type: actionTypes.UPDATE_ACCOUNT_DATA,
+});
+
+const updateAccountDataSuccess = () => ({
+  type: actionTypes.UPDATE_ACCOUNT_DATA_SUCCESS,
+});
+
+const updateAccountDataError = error => ({
+  type: actionTypes.UPDATE_ACCOUNT_DATA_ERROR,
+  error,
+});
+
 export const login = user => async dispatch => {
   try {
     dispatch(loginRequest());
-    const { data } = await userService.login(user);
-    await sessionService.saveUser(data.user);
+    const { data: { results }} = await userService.login(user);
+    await sessionService.saveUser(results);
     dispatch(loginSuccess());
   } catch (err) {
     dispatch(loginError(err));
@@ -81,13 +113,32 @@ export const logout = () => async dispatch => {
 export const signUp = user => async dispatch => {
   try {
     dispatch(signUpRequest());
-    const { data } = await userService.signUp(user);
-    sessionService.saveUser(data.user);
+    const session = await userService.signUp(user);
+    sessionService.saveUser(session);
     dispatch(signUpSuccess());
   } catch (err) {
     dispatch(signUpError(err));
-    // throw new SubmissionError({
-    //   _error: err.data.error,
-    // });
   }
 };
+
+export const getAccountData = () => async dispatch => {
+  try {
+    dispatch(getAccountDataRequest());
+    const { data: { results }} = await userService.getAccountData();
+    sessionService.saveUser(results);
+    dispatch(getAccountDataSuccess());
+  } catch (err) {
+    dispatch(getAccountDataError(err));
+  }
+}
+
+export const updateAccountData = newAccountData => async dispatch => {
+  try {
+    dispatch(updateAccountDataRequest());
+    const { data: { results }} = await userService.updateAccountData(newAccountData);
+    sessionService.saveUser(results);
+    dispatch(updateAccountDataSuccess());
+  } catch (err) {
+    dispatch(updateAccountDataError(err));
+  }
+}

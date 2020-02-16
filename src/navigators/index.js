@@ -1,8 +1,9 @@
-import React, { ScrollView } from 'react';
+import React from 'react';
+import { ScrollView, Text, View, TouchableOpacity } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
-import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
+import { createDrawerNavigator, DrawerNavigatorItems } from 'react-navigation-drawer';
 import SafeAreaView from 'react-native-safe-area-view';
 import LoginScreen from 'screens/loginScreen';
 import MainScreen from 'screens/mainScreen';
@@ -17,6 +18,9 @@ import ResetPasswordScreen from 'screens/resetPasswordScreen';
 import InterestScreen from 'screens/interestScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import ProfileImage from 'components/profileImage';
+import LogoutButton from 'components/logoutButton';
+// import Button from 'components/common/button';
 
 import { BLACK } from 'constants/style';
 
@@ -37,17 +41,6 @@ const DiscountStack = createStackNavigator({
   QRScreen,
   MainScreen
 });
-
-const DrawerContent = props =>
-  <ScrollView>
-    <SafeAreaView
-      // style={styles.container}
-      forceInset={{ top: 'always', horizontal: 'never' }}
-    >
-      <DrawerItems {...props} />
-    </SafeAreaView>
-  </ScrollView>
-
 
 const AppStack = createDrawerNavigator(
   {
@@ -86,15 +79,16 @@ const AppStack = createDrawerNavigator(
     "ResetPasswordScreen": { screen: ResetPasswordScreen } 
   },
   {
-    // contentComponent: (props) => (
-    //   <ScrollView>
-    //     <SafeAreaView
-    //       // style={styles.container}
-    //       forceInset={{ top: 'always', horizontal: 'never' }}
-    //     >
-    //       <DrawerItems {...props} />
-    //     </SafeAreaView>
-    //   </ScrollView>),
+    contentComponent: (props) => (
+      <ScrollView>
+        <SafeAreaView
+          forceInset={{ top: 'always', horizontal: 'never' }}
+        >
+          <ProfileImage />
+          <DrawerNavigatorItems {...props} />
+          <LogoutButton />
+        </SafeAreaView>
+      </ScrollView>),
     drawerWidth: 300,
     drawerPosition: 'left',
     initialRouteName: 'MainScreen',
@@ -127,6 +121,7 @@ const AppNavigator = createAnimatedSwitchNavigator(
     AppLoader,
     AuthStack,
     AuxStack,
+    // AppStack,
     // DiscountStack,
     // QRStack
     // MainStack

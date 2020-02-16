@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, node } from 'prop-types';
+import { func, node, object } from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { validate } from 'validate.js';
@@ -10,8 +10,12 @@ import Button from '../../common/button';
 import { ACCOUNT_FORM } from 'constants/strings';
 import styles from './styles';
 
-const AccountForm = ({ onSubmit, children }) => (
-  <Form onSubmit={onSubmit} validate={values => validate(values, signUpConstraints)}>
+const AccountForm = ({ initialValues, onSubmit, children }) => (
+  <Form
+    onSubmit={onSubmit}
+    // validate={values => validate(values, signUpConstraints)}
+    initialValues={initialValues}
+  >
     {({ handleSubmit, submitError, submitting }) => (
       <View onSubmit={handleSubmit} style={styles.formContainer}>
         <View style={styles.fieldsContainer}>
@@ -42,6 +46,7 @@ const AccountForm = ({ onSubmit, children }) => (
 
 AccountForm.propTypes = {
   onSubmit: func.isRequired,
+  initialValues: object,
   children: node
 };
 

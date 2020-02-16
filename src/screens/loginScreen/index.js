@@ -14,7 +14,7 @@ import styles from './styles';
 const LoginScreen = memo(({ navigation }) => {
   const dispatch = useDispatch();
   const loginRequest = useCallback(user => dispatch(login(user)), [dispatch]);
-  const handleLogin = useCallback(() => navigation.push(SIGN_UP_SCREEN), [navigation]);
+  const handleSignUp = useCallback(() => navigation.push(SIGN_UP_SCREEN), [navigation]);
 
   useNavigateOnLoginEffect(navigation);
 
@@ -32,7 +32,7 @@ const LoginScreen = memo(({ navigation }) => {
       <View style={styles.btnContainer}>
         <Button
           text={LOGIN.createAccount}
-          onPress={handleLogin}
+          onPress={handleSignUp}
           secondary
         />
       </View>

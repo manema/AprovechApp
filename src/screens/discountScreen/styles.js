@@ -11,6 +11,11 @@ const styles = StyleSheet.create({
     height: '30%',
     width: '100%'
   },
+  image: { 
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain'
+  },
   addressContainer: {
     display: 'flex',
     flexDirection: 'row',

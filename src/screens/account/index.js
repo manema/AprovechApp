@@ -1,13 +1,13 @@
-import React, { memo, useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { memo, useCallback, useState, useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import { Image, Text, View, KeyboardAvoidingView, TouchableOpacity, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { object } from 'prop-types';
 import ImagePicker from 'react-native-image-picker';
 
 import LoginForm from 'components/forms/loginForm';
-import { login } from 'actions/userActions';
+import { getAccountData, updateAccountData } from 'actions/userActions';
 import { LOGIN } from 'constants/strings';
-import { SIGN_UP_SCREEN } from 'constants/screens';
+import { RESET_PASSWORD_SCREEN } from 'constants/screens';
 import { ACCOUNT_SCREEN } from 'constants/strings';
 import useNavigateOnLoginEffect from 'hooks/useNavigateOnLoginEffect';
 import Separator from 'components/common/separator';
@@ -18,32 +18,36 @@ import styles from './styles';
 // More info on all the options is below in the API Reference... just some common use cases shown here
 const options = {
   title: 'Select Avatar',
-  customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
   storageOptions: {
     skipBackup: true,
     path: 'images',
   },
 };
 
-const Settings = () => 
+const Settings = ({ handlePressResetPassword }) => 
   <View>
     <Text style={[styles.settingTitle, styles.settingChildren]}>{ACCOUNT_SCREEN.title}</Text>
-    <TouchableOpacity style={[styles.settingButtons, styles.settingChildren]} onPress={() => {}}>
+    <TouchableOpacity style={[styles.settingButtons, styles.settingChildren]} onPress={handlePressResetPassword}>
       <Text>{ACCOUNT_SCREEN.passwordChange}</Text>
     </TouchableOpacity>
   </View>
 
-const Account = memo(({ navigation }) => {
+const Account = memo(({ userData, navigation }) => {
+  const { name, lastName } = userData;
   const [avatarImage, setAvatarImage] = useState('');
   const dispatch = useDispatch();
-  const loginRequest = useCallback(user => dispatch(login(user)), [dispatch]);
+  const getAccountDataRequest = useCallback(() => dispatch(getAccountData()), [dispatch]);
+  const updateAccountDataRequest = useCallback(newAccountData => dispatch(updateAccountData(newAccountData)), [dispatch]);
   const handleLogin = useCallback(() => navigation.push(SIGN_UP_SCREEN), [navigation]);
+  const handlePressResetPassword = useCallback(() => navigation.navigate(RESET_PASSWORD_SCREEN), [navigation]);
 
   useNavigateOnLoginEffect(navigation);
 
+  useEffect(() => {
+    getAccountDataRequest();
+  }, [getAccountDataRequest]);
+
   const handlePressAvatarIcon = () => ImagePicker.showImagePicker(options, (response) => {
-    console.log('Response = ', response);
-  
     if (response.didCancel) {
       console.log('User cancelled image picker');
     } else if (response.error) {
@@ -52,6 +56,7 @@ const Account = memo(({ navigation }) => {
       console.log('User tapped custom button: ', response.customButton);
     } else {
       const source = { uri: response.uri };
+      console.log(response.data);
       setAvatarImage(response.data);
     }
   });
@@ -65,7 +70,7 @@ const Account = memo(({ navigation }) => {
             source={avatarImage ? { uri: `data:image/gif;base64,${avatarImage}`} : require('../../assets/images/avatar.png')} 
           />
         </TouchableWithoutFeedback>
-        <Text style={styles.userName}>Usuario Cliente</Text>
+        <Text style={styles.userName}>{`${name} ${lastName}`}</Text>
         <Text>usuario@gmail.com</Text>
       </View>
       <View style={styles.mainSeparator} />
@@ -73,8 +78,8 @@ const Account = memo(({ navigation }) => {
         <Separator />
       </View>
       <View style={{ width: '80%', alignSelf: 'center' }}>
-        <AccountForm onSubmit={() => {}}>
-          <Settings />
+        <AccountForm onSubmit={data => updateAccountDataRequest({ ...data, photo: avatarImage })} initialValues={userData}>
+          <Settings handlePressResetPassword={handlePressResetPassword} />
         </AccountForm>
       </View>
     </KeyboardAvoidingView>
@@ -85,6 +90,10 @@ Account.propTypes = {
   navigation: object.isRequired,
 };
 
+Account.defaultProps = {
+  userData: {}
+};
+
 Account.options = {
   topBar: {
     title: {
@@ -93,4 +102,8 @@ Account.options = {
   },
 };
 
-export default Account;
+const mapState = ({ session }) => ({
+  userData: session.user
+})
+
+export default connect(mapState, null)(Account);

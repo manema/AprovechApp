@@ -13,9 +13,10 @@ export const initialState = {
 const handleGetCommerces = (state, { commerces }) => {
   let allDiscounts = [];
 
-  commerces.length && commerces.forEach(({ discounts, address }) => {
+  commerces.length && commerces.forEach(({ discounts, address, image }) => {
     discounts.length && discounts.forEach( discount => {
       discount.address = address;
+      discount.discountIcon = image;
       allDiscounts.push(discount);
     })
   });

@@ -58,7 +58,7 @@ const MainScreen = ({
   const [triggerSwipeUp, setTriggerSwipeUp] = useState();
   const [useIndividualCommerceDiscounts, setUseIndividualCommerceDiscounts] = useState(null);
 
-  const handlePressDiscount = useCallback((id, idCommerce) => navigation.navigate(DISCOUNT_SCREEN, { id, idCommerce }), [navigation]);
+  const handlePressDiscount = useCallback((id, idCommerce, discountIcon) => navigation.navigate(DISCOUNT_SCREEN, { id, idCommerce, discountIcon }), [navigation]);
   const commercesSearched = commerces && auxFilter(searchTerm, commerces);
   const individualFilteredDiscounts = commerces && commerces.find(({ id }) => id === useIndividualCommerceDiscounts);
   const discountsToFilter = (individualFilteredDiscounts && individualFilteredDiscounts.discounts) || discounts;
@@ -109,14 +109,26 @@ const MainScreen = ({
             />
           }
           <InterestBar interests={interests} onChange={getCommercesByInterest}/>
-          {isSwipeUp && allDiscounts && Array.from(allDiscounts).map(({ idTemp, id, idCommerce, name, discountPercentage, dateStart, dateEnd, address, interestDescription }) =>
+          {isSwipeUp && allDiscounts && Array.from(allDiscounts).map(({ 
+            idTemp,
+            id,
+            idCommerce,
+            name,
+            discountPercentage,
+            dateStart,
+            dateEnd,
+            address,
+            interestDescription,
+            discountIcon
+          }) =>
             <Discount
               key={idTemp}
               commerceName={name}
               commerceAddress={address}
               distanceToCommerce={1.2}
               dicountType="Accesorios"
-              onChange={() => handlePressDiscount(id, idCommerce)}
+              discountIcon={discountIcon}
+              onChange={() => handlePressDiscount(id, idCommerce, discountIcon)}
             />
           )}
         </View>

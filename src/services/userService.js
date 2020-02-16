@@ -6,11 +6,19 @@ class UserService {
   }
 
   static logout() {
-    return api.delete('/users/sign_out');
+    return api.delete('Account/Logout');
   }
 
   static signUp(user) {
     return api.post('Account/create', user);
+  }
+
+  static getAccountData() {
+    return api.get('Account');
+  }
+
+  static updateAccountData(newAccountData) {
+    return api.put('Account/Modify', newAccountData);
   }
 }
 

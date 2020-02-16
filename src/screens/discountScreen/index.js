@@ -26,8 +26,8 @@ const ReviewQualification = () =>
     </Text>
   </View>
 
-const DiscountScreen = memo(({ navigation, discountIcon, commerceAddress, itemQualification, discounts }) => {
-  const { id, idCommerce } = navigation.state.params;
+const DiscountScreen = memo(({ navigation, commerceAddress, itemQualification, discounts }) => {
+  const { id, idCommerce, discountIcon } = navigation.state.params;
   const currentDiscount = discounts.find(discount => discount.id === id && discount.idCommerce == idCommerce);
   if(!currentDiscount) return null;
   const { description, address, discountValue, discountType } = currentDiscount;
@@ -36,7 +36,7 @@ const DiscountScreen = memo(({ navigation, discountIcon, commerceAddress, itemQu
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        {discountIcon ? <Image source={discountIcon} /> : <View style={styles.placeholderIcon}><Icon name="store-alt" size={50} color={BLACK} /></View>}
+        {discountIcon ? <Image style={styles.image} source={{ uri: `data:image/gif;base64,${discountIcon}`}} /> : <View style={styles.placeholderIcon}><Icon name="store-alt" size={50} color={BLACK} /></View>}
         <View style={styles.addressContainer}>
           <Icon name="map-marker-alt" size={15} color={GREY} />
           <Text style={styles.address}>{address}</Text>

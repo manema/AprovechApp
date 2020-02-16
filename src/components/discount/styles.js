@@ -1,15 +1,25 @@
 import { StyleSheet } from 'react-native';
-import { BLACK, GREY } from 'constants/style';
+import { WHITE, BLACK, GREY } from 'constants/style';
 
 const styles = StyleSheet.create({
   container: { 
+    backgroundColor: WHITE,
     borderColor: BLACK,
     borderWidth: 1,
+    borderRadius: 5,
     display: 'flex',
     flexDirection: 'row',
     marginVertical: 10,
     height: 100,
-    width: '90%'
+    width: '90%',
+    shadowColor: BLACK,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
   },
   infoSection: {
     display: 'flex',
