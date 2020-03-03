@@ -15,14 +15,14 @@ import { DISCOUNT_SCREEN } from 'constants/strings';
 import { GREY, BLACK, YELLOW } from 'constants/style';
 import styles from './styles';
 
-const ReviewQualification = () => 
+const ReviewQualification = ({ text, value }) => 
   <View style={styles.reviewComponentContainer}>
     <View style={styles.reviewValueSection}>
-      <Text style={styles.reviewValue}>{4.4}
+      <Text style={styles.reviewValue}>{value}
       </Text>
       <AntFontsIcon name='star' size={15} color={YELLOW} />
     </View>
-    <Text style={styles.reviewTitle}>Articulo
+    <Text style={styles.reviewTitle}>{text}
     </Text>
   </View>
 
@@ -30,7 +30,7 @@ const DiscountScreen = memo(({ navigation, commerceAddress, itemQualification, d
   const { id, idCommerce, discountIcon } = navigation.state.params;
   const currentDiscount = discounts.find(discount => discount.id === id && discount.idCommerce == idCommerce);
   if(!currentDiscount) return null;
-  const { description, address, discountValue, discountType } = currentDiscount;
+  const { description, address, discountValue, discountType, article, value, commerceValued } = currentDiscount;
   const handlePressGetDiscount = useCallback(() => navigation.navigate(QR_SCREEN, { qrId: id, idCommerce, creating: true }), [navigation]);
 
   return (
@@ -43,9 +43,9 @@ const DiscountScreen = memo(({ navigation, commerceAddress, itemQualification, d
         </View>
       </View>
       <View style={styles.reviewContainer}>
-        <ReviewQualification />
-        <ReviewQualification />
-        <ReviewQualification />
+        <ReviewQualification text="Artículo" value={article} />
+        <ReviewQualification text="Valor" value={value} />
+        <ReviewQualification text="Atención" value={commerceValued} />
         <View style={styles.discountContainer}>
           <Text style={styles.discountValue}>
             {`${discountType === discountTypes.value ? `$${discountValue}` : `${discountValue}%`}`}

@@ -39,6 +39,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+  discountDesc: {
+    height: 60
+  },
   imageContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -62,11 +65,15 @@ const styles = StyleSheet.create({
   addressContainer: {
     display: 'flex',
     flexDirection: 'row',
-    marginTop: 25
+    height: 15,
+    marginTop: 10
   },
   commerceName: {
     color: 'steelblue',
-    fontSize: 18
+    fontSize: 18,
+    height: 45,
+    overflow: 'hidden',
+    maxWidth: 200
   },
   distance: {
     fontSize: 10

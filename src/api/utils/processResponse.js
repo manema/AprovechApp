@@ -5,7 +5,6 @@ export default async response => {
 
   try {
     const json = await response.json();
-    console.log(json, "json");
 
     response.data = humps.camelizeKeys(json || { message: response.statusText });
     return response;

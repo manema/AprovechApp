@@ -19,6 +19,7 @@ import { getCommerces, getCommercesByInterest } from 'actions/commercesActions';
 import { getDiscounts } from 'actions/discountActions';
 import { DISCOUNT_SCREEN } from 'constants/screens';
 import { auxFilter } from 'utils/helpers'; 
+import useNavigationOnLogoutEffect from 'hooks/useNavigationOnLogoutEffect';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LoginForm from 'components/forms/loginForm';
 import InterestBar from 'components/interestBar';
@@ -71,6 +72,8 @@ const MainScreen = ({
 
   const isLoading = isCommerceLoading || isInterestLoading;
 
+  useNavigationOnLogoutEffect(navigation);
+
   return (
     <View style={styles.container}>
       { isLoading ? 
@@ -114,7 +117,8 @@ const MainScreen = ({
             id,
             idCommerce,
             name,
-            discountPercentage,
+            discountValue,
+            discountType,
             dateStart,
             dateEnd,
             address,
@@ -126,7 +130,8 @@ const MainScreen = ({
               commerceName={name}
               commerceAddress={address}
               distanceToCommerce={1.2}
-              dicountType="Accesorios"
+              dicountType={discountType}
+              discountValue={discountValue}
               discountIcon={discountIcon}
               onChange={() => handlePressDiscount(id, idCommerce, discountIcon)}
             />

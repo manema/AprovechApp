@@ -16,6 +16,7 @@ import { enableAndroidAnimation } from 'utils/helpers';
 
 import AppContainer from 'navigators';
 import configureStore from './src/store/configureStore';
+console.disableYellowBox = true;
 
 const store = configureStore({});
 applyDefaultInterceptors(api);

@@ -16,10 +16,10 @@ import { GREY, BLACK, YELLOW } from 'constants/style';
 import Review from 'components/review';
 import styles from './styles';
 
-const ReviewQualification = ({ kind }) => 
+const ReviewQualification = ({ kind, value }) => 
   <View style={styles.reviewComponentContainer}>
     <View style={styles.reviewValueSection}>
-      <Text style={styles.reviewValue}>{4.4}
+      <Text style={styles.reviewValue}>{value}
       </Text>
       <AntFontsIcon name='star' size={15} color={YELLOW} />
     </View>
@@ -30,9 +30,11 @@ const ReviewScreen = memo(({ navigation, discountIcon, commerceAddress, itemQual
   const [reviewValues, setReviewValues] = useState({ article: 1, commerce: 1, value: 1 });
   const { article, commerce, value } = reviewValues;
   const { qrId, idDiscount, idCommerce, commerceImage } = navigation.state.params;
-  const currentDiscount = discounts.find(discount => discount.id === qrId);
+  console.log(idDiscount);
+  const currentDiscount = discounts.find(discount => discount.id === idDiscount);
+  console.log(currentDiscount);
 
-  const { description, address, discountValue, discountType } = currentDiscount || {};
+  const { description, address, discountValue, discountType, article: articleCurrentValue, value: valueCurrentValue, commerceValued: commerceValuedCurrentValue } = currentDiscount || {};
   const handleSuccessfulReview = useCallback(() => navigation.navigate(LIST_OF_QRS_SCREEN), [navigation]);
 
   const handleReviewQr = async dispatch => {
@@ -42,7 +44,7 @@ const ReviewScreen = memo(({ navigation, discountIcon, commerceAddress, itemQual
     try {
       await qrService.reviewQr(dataToReview);
       Toast.showWithGravity('Gracias por su valoración!', Toast.LONG, Toast.CENTER);
-      setTimeout(() => handleSuccessfulReview(), 4000);
+      setTimeout(() => handleSuccessfulReview(), 3000);
     } catch (err) {
       Toast.showWithGravity('Algo no funcionó, por favor contacta al soporte tecnico.', Toast.LONG, Toast.CENTER);
     }
@@ -58,14 +60,17 @@ const ReviewScreen = memo(({ navigation, discountIcon, commerceAddress, itemQual
         </View>
       </View>
       <View style={styles.reviewContainer}>
-        <ReviewQualification kind={REVIEW_SCREEN.article} />
-        <ReviewQualification kind={REVIEW_SCREEN.value} />
-        <ReviewQualification kind={REVIEW_SCREEN.atention} />
+        <ReviewQualification kind={REVIEW_SCREEN.article} value={articleCurrentValue} />
+        <ReviewQualification kind={REVIEW_SCREEN.value} value={valueCurrentValue} />
+        <ReviewQualification kind={REVIEW_SCREEN.atention} value={commerceValuedCurrentValue} />
         <View style={styles.discountContainer}>
           <Text style={styles.discountValue}>
             {`${discountType === discountTypes.value ? `$${discountValue}` : `${discountValue}%`}`}
           </Text>
         </View>
+      </View>
+      <View style={{ marginHorizontal: 15, height: 40, marginVertical: 3 }}>
+        <Text>{description}</Text>
       </View>
       <View style={styles.descriptionSection}>
         <Review 

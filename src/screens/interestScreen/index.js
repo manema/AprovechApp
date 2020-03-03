@@ -30,7 +30,7 @@ const InterestScreen = memo(({ navigation, getUserInterests, addUserInterest, de
     setIsModalVisible(false);
   };
 
-  useNavigateOnLoginEffect(navigation);
+  // useNavigateOnLoginEffect(navigation);
 
   return (
     <View style={styles.container}>
@@ -40,8 +40,8 @@ const InterestScreen = memo(({ navigation, getUserInterests, addUserInterest, de
         visible={isModalVisible}
         onRequestClose={() => setIsModalVisible(false)}
       >
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'grey' }}>
-          <View style={{ width: '60%', height: 500 }}>
+        <View style={styles.modal}>
+          <View style={{ width: '80%' }}>
             <TouchableOpacity onPress={() => setIsModalVisible(false)} style={{ alignSelf: 'flex-end', marginBottom: 15 }}>
               <Text style={{ fontSize: 25 }}>x</Text>
             </TouchableOpacity>
@@ -50,7 +50,7 @@ const InterestScreen = memo(({ navigation, getUserInterests, addUserInterest, de
               style={styles.searchInput}
               placeholder="Tipea el nombre de tu interes"
             />
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ height: 300 }}>
               {filteredInterests.length ? filteredInterests.map(({ name, id }) => 
                 <TouchableOpacity style={{ borderBottomWidth: 1, marginVertical: 5 }} onPress={() => handleAddInterest(id)} key={id}>
                   <Text style={{ fontSize: 18 }}>{name}</Text>
@@ -68,7 +68,7 @@ const InterestScreen = memo(({ navigation, getUserInterests, addUserInterest, de
       <ScrollView style={{ flexGrow: 7 }}>
         { 
           !!userInterests.length && userInterests.map(({ id, name }) =>
-          <View style={{ width: '90%', marginLeft: '5%' }}>
+          <View style={{ width: '90%', marginLeft: '5%' }} key={id}>
             <View style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
               <InterestCircle key={id} id={id} name={name} onChange={() => {}} />
               <DeleteInterestBtn key={id} id={id} onChange={() => deleteUserInterest(id)} />
@@ -78,23 +78,23 @@ const InterestScreen = memo(({ navigation, getUserInterests, addUserInterest, de
         )}
       </ScrollView>
       <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexGrow: 1 }}>
-        <AddInterestBtn onChange={() => setIsModalVisible(true)} />
+        <AddInterestBtn onChange={() => setIsModalVisible(true)} id="interestId" />
       </View>
     </View>
   );
 });
 
-InterestScreen.propTypes = {
-  navigation: object.isRequired,
-};
+// InterestScreen.propTypes = {
+//   navigation: object.isRequired,
+// };
 
-InterestScreen.options = {
-  topBar: {
-    title: {
-      text: "Intereses",
-    },
-  },
-};
+// InterestScreen.options = {
+//   topBar: {
+//     title: {
+//       text: "Intereses",
+//     },
+//   },
+// };
 
 const mapState = ({ interest }) => ({
   userInterests: interest.userInterests,

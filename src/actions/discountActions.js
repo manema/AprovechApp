@@ -17,7 +17,6 @@ const getDiscountsError = error => ({
 
 export const getDiscounts = () => async dispatch => {
   try {
-    console.log('vhgnvhvhg');
     dispatch(getDiscountsAction());
     const { data: { results }} = await discountService.getDiscount();
     dispatch(getDiscountsSuccess(results));

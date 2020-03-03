@@ -89,8 +89,8 @@ const updateAccountDataError = error => ({
 export const login = user => async dispatch => {
   try {
     dispatch(loginRequest());
-    const { data: { results }} = await userService.login(user);
-    await sessionService.saveUser(results);
+    const { data } = await userService.login(user);
+    await sessionService.saveUser(data);
     dispatch(loginSuccess());
   } catch (err) {
     dispatch(loginError(err));
@@ -135,8 +135,8 @@ export const getAccountData = () => async dispatch => {
 export const updateAccountData = newAccountData => async dispatch => {
   try {
     dispatch(updateAccountDataRequest());
-    const { data: { results }} = await userService.updateAccountData(newAccountData);
-    sessionService.saveUser(results);
+    const { data } = await userService.updateAccountData(newAccountData);
+    sessionService.saveUser(data);
     dispatch(updateAccountDataSuccess());
   } catch (err) {
     dispatch(updateAccountDataError(err));

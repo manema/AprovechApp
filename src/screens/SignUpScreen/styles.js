@@ -21,8 +21,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   welcomeMessage: {
-    fontSize: 22,
-    marginBottom: 20
+    alignSelf: 'center',
+    fontSize: 26,
+    marginBottom: 20,
+    marginTop: 10,
+    fontWeight: 'bold'
   }
 });
 

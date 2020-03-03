@@ -19,7 +19,7 @@ Button.propTypes = {
   text: string,
   addedStyle: object,
   secondary: bool,
-  textAddedStyle: string
+  textAddedStyle: object
 };
 
 Button.defaultProps = {

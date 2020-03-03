@@ -20,6 +20,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProfileImage from 'components/profileImage';
 import LogoutButton from 'components/logoutButton';
+import HomeButton from 'components/homeButton';
 // import Button from 'components/common/button';
 
 import { BLACK } from 'constants/style';
@@ -30,21 +31,51 @@ const AuthStack = createStackNavigator({
 });
 
 const QRStack = createStackNavigator({
-  ListOfQrScreen,
+  "ListOfQrScreen": {
+    screen: ListOfQrScreen,
+    navigationOptions: {
+      headerLeft: (props) => (<HomeButton {...props} />),
+    },
+  },
+  // ListOfQrScreen,
   ReviewScreen,
   QRScreen
 });
 
+const InterestStack = createStackNavigator({
+  'InterestScreen': {
+    screen: InterestScreen,
+    navigationOptions: {
+      headerLeft: (props) => (<HomeButton {...props} />),
+    }
+  },
+})
+
 
 const DiscountStack = createStackNavigator({
-  DiscountScreen,
+  'DiscountScreen': {
+    screen: DiscountScreen,
+    navigationOptions: {
+      headerLeft: (props) => (<HomeButton {...props} />),
+    }
+  },
   QRScreen,
-  MainScreen
+  // MainScreen
 });
+
+const AccountStack = createStackNavigator({
+  "Account": {
+    screen: Account,
+    navigationOptions: {
+      headerLeft: (props) => (<HomeButton {...props} />),
+    },
+  },
+  ResetPasswordScreen
+})
 
 const AppStack = createDrawerNavigator(
   {
-    "MainScreen": { 
+    "MainScreen": {
       screen: MainScreen,
       navigationOptions: {
         drawerLabel: 'Inicio',
@@ -54,11 +85,11 @@ const AppStack = createDrawerNavigator(
       }, 
     },
     'InterestScreen': {
-      screen: InterestScreen,
+      screen: InterestStack,
       navigationOptions: {
         drawerLabel: 'Mis intereses',
         drawerIcon:
-          <Icon name="heart" size={25} color={BLACK} />
+          <Icon name="heart" size={25} color={BLACK} />,
       }
     },
     // "Mis QRs": { screen: QRStack },
@@ -69,14 +100,14 @@ const AppStack = createDrawerNavigator(
       }
     },
     // "QRScreen": { screen: QRScreen },
-    "ReviewScreen": { screen: ReviewScreen },
+    // "ReviewScreen": { screen: ReviewScreen },
     "Account": { 
-      screen: Account,
+      screen: AccountStack,
       navigationOptions: {
         drawerIcon: <Ionicons name="ios-person" size={30} color={BLACK} />
       }
     },
-    "ResetPasswordScreen": { screen: ResetPasswordScreen } 
+    // "ResetPasswordScreen": { screen: ResetPasswordScreen } 
   },
   {
     contentComponent: (props) => (
@@ -95,18 +126,10 @@ const AppStack = createDrawerNavigator(
   }
 );
 
-const AuxStack = createStackNavigator({
-  "AppStack": { 
-    screen: AppStack,
-    navigationOptions: {
-      headerLeft: null,
-      headerShown: false,
-      header: null
-    }, 
-  },
-  DiscountScreen,
-  QRScreen
-});
+// const DiscountStack = createStackNavigator({
+//   DiscountScreen,
+//   QRScreen
+// });
 
 const MainStack = createStackNavigator({
   // DiscountScreen,
@@ -120,7 +143,10 @@ const AppNavigator = createAnimatedSwitchNavigator(
   {
     AppLoader,
     AuthStack,
-    AuxStack,
+    AppStack,
+    DiscountStack,
+
+
     // AppStack,
     // DiscountStack,
     // QRStack

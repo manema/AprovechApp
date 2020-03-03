@@ -23,7 +23,7 @@ const AccountForm = ({ initialValues, onSubmit, children }) => (
           {submitError && <Text>{submitError}</Text>}
           <Field name="name" label={ACCOUNT_FORM.name} component={Input} addedStyle={styles.inputStyle} />
           <Field name="lastName" label={ACCOUNT_FORM.lastName} component={Input} addedStyle={styles.inputStyle} />
-          <Field name="email" label={ACCOUNT_FORM.email} component={Input} addedStyle={styles.inputStyle} />
+          <Field name="email" label={ACCOUNT_FORM.email} component={Input} addedStyle={styles.inputStyle} editable={false} />
           <Field name="phone" label={ACCOUNT_FORM.phone} component={Input} addedStyle={styles.inputStyle} />
         </View>
         {children && <View style={styles.childrenContainer}>{children}</View>}

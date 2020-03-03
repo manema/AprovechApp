@@ -33,7 +33,7 @@ const Settings = ({ handlePressResetPassword }) =>
   </View>
 
 const Account = memo(({ userData, navigation }) => {
-  const { name, lastName } = userData;
+  const { name, lastName, photo } = userData;
   const [avatarImage, setAvatarImage] = useState('');
   const dispatch = useDispatch();
   const getAccountDataRequest = useCallback(() => dispatch(getAccountData()), [dispatch]);
@@ -41,7 +41,7 @@ const Account = memo(({ userData, navigation }) => {
   const handleLogin = useCallback(() => navigation.push(SIGN_UP_SCREEN), [navigation]);
   const handlePressResetPassword = useCallback(() => navigation.navigate(RESET_PASSWORD_SCREEN), [navigation]);
 
-  useNavigateOnLoginEffect(navigation);
+  // useNavigateOnLoginEffect(navigation);
 
   useEffect(() => {
     getAccountDataRequest();
@@ -67,7 +67,7 @@ const Account = memo(({ userData, navigation }) => {
         <TouchableWithoutFeedback onPress={() => handlePressAvatarIcon()}>
           <Image 
             style={{ width: 100, height: 100, borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2 }}
-            source={avatarImage ? { uri: `data:image/gif;base64,${avatarImage}`} : require('../../assets/images/avatar.png')} 
+            source={photo || avatarImage ? { uri: `data:image/gif;base64,${photo || avatarImage}`} : require('../../assets/images/avatar.png')} 
           />
         </TouchableWithoutFeedback>
         <Text style={styles.userName}>{`${name} ${lastName}`}</Text>

@@ -1,4 +1,4 @@
 export default config = {
-  velocityThreshold: 0.3,
-  directionalOffsetThreshold: 80
+  velocityThreshold: 0.8,
+  directionalOffsetThreshold: 60
 };

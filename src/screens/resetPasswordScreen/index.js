@@ -13,8 +13,6 @@ const ResetPasswordScreen = memo(({ navigation }) => {
   // const loginRequest = useCallback(user => dispatch(login(user)), [dispatch]);
   // const handleLogin = useCallback(() => navigation.push(SIGN_UP_SCREEN), [navigation]);
 
-  useNavigateOnLoginEffect(navigation);
-
   return (
     <KeyboardAvoidingView style={styles.container} enabled={false} behavior="height">
       <View style={styles.welcomeMessageContainer}>

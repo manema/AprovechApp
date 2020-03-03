@@ -4,10 +4,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  image: {
+    height: 150,
+    width: '100%',
+    resizeMode: 'contain',
+    marginBottom: 20
+  },
   loginContainer: {
     width: '80%',
-    height: '80%',
-    alignSelf: 'center',
+    height: '60%',
+    alignSelf: 'center'
   },
   btnContainer: {
     alignSelf: 'center'

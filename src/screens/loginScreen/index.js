@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { Text, View, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { Text, View, KeyboardAvoidingView, TouchableOpacity, Image } from 'react-native';
 import { object } from 'prop-types';
 
 import LoginForm from 'components/forms/loginForm';
@@ -20,12 +20,16 @@ const LoginScreen = memo(({ navigation }) => {
 
   return (
     <KeyboardAvoidingView style={styles.container} enabled={false} behavior="height">
-      <View style={styles.welcomeMessageContainer}>
-        <Text style={styles.welcomeMessage}>{LOGIN.loginTitle}</Text>
-        <TouchableOpacity style={styles.btnBack}>
-          <Text text="<-" />
-        </TouchableOpacity>
-      </View>
+      <Image 
+        style={styles.image}
+        source={require('../../assets/images/logo.png')} 
+      />
+      {/* <View style={styles.welcomeMessageContainer}>
+        <Image 
+          style={styles.image}
+          source={require('../../assets/images/logo.png')} 
+        />
+      </View> */}
       <View style={styles.loginContainer}>
         <LoginForm onSubmit={loginRequest} />
       </View>

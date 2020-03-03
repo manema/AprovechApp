@@ -8,7 +8,8 @@ const Input = ({
   password = false,
   label,
   meta: { touched, error },
-  addedStyle
+  addedStyle,
+  editable
 }) => (
   <View style={styles.container}>
     <View>
@@ -17,6 +18,7 @@ const Input = ({
         onChangeText={onChange}
         secureTextEntry={password}
         placeholder={label}
+        editable={editable}
         {...restInput}
       />
       {touched && error && <Text style={styles.error}>{error}</Text>}
@@ -29,11 +31,12 @@ Input.propTypes = {
   label: string,
   meta: object,
   password: bool,
-  addedStyle: string
+  addedStyle: object,
+  editable: bool
 };
 
 Input.defaultProps = {
-  addedStyle: ''
+  addedStyle: {}
 };
 
 export default Input;
